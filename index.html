@@ -46,10 +46,22 @@
                 <section id="requirements">
                     <h3>Requirements/Assumptions</h3>
                     <ul>
-                        <li>The responsive iframe library can stand alone and <em>does not require jQuery</em>. (Some of the examples use jQuery for unrelated features.)</li>
+                        <li>The responsive iframe library does <em>not</em> require jQuery or any other libraries. (Some of the examples use jQuery for unrelated features.)</li>
                         <li>If you&rsquo;re pasting the iframe embed code into a CMS or blogging software, make sure that it allows you to embed HTML and JavaScript. Some CMSes (such as WordPress) may strip it out.</li>
                         <li>The parent and child pages do not necessarily need to be on the same domain. (You can restrict this with xdomain.)</li>
                     </ul>
+                    
+                    <h4>Browsers</h4>
+                    <p>This has been tested in:</p>
+                    <ul>
+                        <li>Internet Explorer 9 and 10 (Windows 7)</li>
+                        <li>Chrome 32 (Mac 10.9)</li>
+                        <li>Firefox 26 (Mac 10.9)</li>
+                        <li>Safari 7 (Mac 10.9)</li>
+                        <li>iOS 7 Safari</li>
+                        <li>Android 4.4 Chrome</li>
+                    </ul>
+                    <p>Internet Explorer versions earlier than 9 are not supported.</p>
                 </section>
                     
                 <section id="examples">
@@ -77,7 +89,7 @@
                         <p>You don&rsquo;t have to do anything special to the child pages, but you do need to keep a few things in mind for the parent page:</p>
                         <ul>
                             <li>Each child embed needs a unique div ID (<code>&lt;div id="example"&gt;</code>, <code>&lt;div id="bar-graph"&gt;</code>, etc.).</li>
-                            <li>Include pym.js only <em>once</em> on the page.</li>
+                            <li>Include <code>pym.js</code> only <em>once</em> on the page.</li>
                         </ul>
 
                         <h5>Code Needed on the Parent Page</h5>
