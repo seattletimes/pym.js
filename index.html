@@ -39,7 +39,7 @@
                 <section id="about">
                     <h2>About Pym.js</h2>
                     <p>Using iframes in a responsive page can be tricky. It&rsquo;s easy enough to make an iframe&rsquo;s width span 100% of its container, but sizing its height is tricky &mdash; especially if the content of the iframe changes height depending on page width or actions within the iframe.</p>
-                    <p>Pym.js embeds and resizes an iframe responsively (width <em>and</em> height) within its parent container. It also bypasses the usual cross-domain issues.</p>
+                    <p><a href="https://raw.githubusercontent.com/nprapps/responsiveiframe/master/src/responsiveIframe.js">Pym.js</a> embeds and resizes an iframe responsively (width <em>and</em> height) within its parent container. It also bypasses the usual cross-domain issues.</p>
                     <p><strong>Use case:</strong> The NPR Visuals team uses Pym.js to embed small custom bits of code (charts, maps, etc.) inside our CMS without CSS or JavaScript conflicts. <a href="http://www.npr.org/2014/03/25/293870089/maze-of-college-costs-and-aid-programs-trap-some-families">See an example of this in action.</a></p>
                 </section>
                 
@@ -54,7 +54,7 @@
                     
                 <section id="examples">
                     <h3>Usage</h3>
-                    <p>Resize your browser window to see the responsiveness in action. Replace "<strong>PATH-TO-THIS-FOLDER</strong>" with the actual published path to your files</p>
+                    <p>Resize your browser window to see the responsiveness in action. In all code examples, <code>PATH-TO-THIS-FOLDER</code> with the actual published path to your files</p>
                     
                     <div class="example-block">
                         <h4>On the Parent Page (Where You're Putting the iFrame)</h4>
@@ -68,6 +68,26 @@
 <pre><code>&lt;div id="example" data-iframe-target="PATH-TO-THIS-FOLDER/child.html"&gt;&lt;/div&gt;
 &lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/responsiveIframe.js"&gt;&lt;/script&gt;
 &lt;script&gt;window.responsiveParent();&lt;/script&gt;
+</code></pre>
+                    </div>
+
+
+                    <div class="example-block">
+                        <h4>Multiple Embeds on the Same Parent Page</h4>
+                        <p>You don&rsquo;t have to do anything special to the child pages, but you do need to keep a few things in mind for the parent page:</p>
+                        <ul>
+                            <li>Each child embed needs a unique div ID (<code>&lt;div id="example"&gt;</code>, <code>&lt;div id="bar-graph"&gt;</code>, etc.).</li>
+                            <li>Include pym.js only <em>once</em> on the page.</li>
+                        </ul>
+
+                        <h5>Code Needed on the Parent Page</h5>
+<pre><code>&lt;div id="example-1" data-iframe-target="PATH-TO-THIS-FOLDER/example-1/child.html"&gt;&lt;/div&gt;
+&lt;div id="example-2" data-iframe-target="PATH-TO-THIS-FOLDER/example-2/child.html"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/responsiveIframe.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    window.responsiveParent();
+    window.responsiveParent();
+&lt;/script&gt;
 </code></pre>
                     </div>
 
