@@ -167,7 +167,8 @@ section {
 header h1 {
   letter-spacing: -1px;
   font-size: 48px;
-  color: #553f3f;
+/*  color: #553f3f; */
+  color: #fff;
   line-height: 1.2;
 }
 
@@ -247,6 +248,10 @@ header a {
 .org-logo img {
     height: 24px;
 }
+
+.org-logo.npr { padding: 5px 6px; }
+.org-logo.npr img { height: 20px; }
+
 .logos p {
     font-size: 12px;
     clear: both;
