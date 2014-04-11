@@ -71,10 +71,10 @@
                     <div class="example-block">
                         <h4>On the Parent Page (Where You&rsquo;re Putting the iFrame)</h4>
                         <ul>
-                            <li>Name your containing div with a unique ID name, and include a <code>data-iframe-target</code> attribute with the path to your <code>child.html</code> file.</li>
+                            <li>Name your containing div with a unique ID.</li>
                             <li>Include <code>pym.js</code>. <em>Only once per page.</em></li>
-                            <li>Call <code>window.pym.parent();</code> to set up all responsive iframes on the page. <em>Only once per page.</em></li>
-                            <li>Optional: To filter incoming message domains, you can pass in a regex: <code>window.pym.parent('example', { xdomain: '*\.npr\.org' });</code></li>
+                            <li>Create a <code>new pym.Parent(parent_id, child_url);</code> once per iframe</li>
+                            <li>Optional: To filter incoming message domains, you can pass in a regex: <code>pym.parent('example', 'child.html', { xdomain: '*\.npr\.org' });</code></li>
                         </ul>
 
 <pre><code>&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/pym.js"&gt;&lt;/script&gt;
@@ -92,12 +92,12 @@
                         </ul>
 
                         <h5>Code Needed on the Parent Page</h5>
-<pre><code>&lt;div id="example-1" data-iframe-target="PATH-TO-THIS-FOLDER/child-1.html"&gt;&lt;/div&gt;
-&lt;div id="example-2" data-iframe-target="PATH-TO-THIS-FOLDER/child-2.html">&lt;/div&gt;
+<pre><code>&lt;div id="example-1"&gt;&lt;/div&gt;
+&lt;div id="example-2"&gt;&lt;/div&gt;
 &lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/pym.js">&lt;/script&gt;
 &lt;script&gt;
-    window.pym.parent('example-1', {});
-    window.pym.parent('example-2', {});
+    var pymParent = new pym.Parent('example-1', 'PATH-TO-THIS-FOLDER/child-1.html', {});
+    var second = new pym.Parent('example-2', 'PATH-TO-THIS-FOLDER/child-2.html', {});
 &lt;/script&gt;
 </code></pre>
                     </div>
@@ -107,10 +107,10 @@
                         <h4>On the Child Page (The Content You Want to Embed)</h4>
                         <ul>
                             <li>Include <code>pym.js</code>.</li>
-                            <li>Invoke <code>window.pym.child();</code>.</li>
-                            <li>Optional: If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>window.pym.child({ renderCallback: myFunc });</code> This function will be called once when the page loads and again any time the window is resized.</li>
-                            <li>Optional: You can pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). For example: <code>window.pym.child({ polling: 500 });</code>.</li>
-                            <li>Optional: If you need finer control over resize events, you can invoke <code>window.pym.child.sendHeightToParent()</code> at any time to force the iframe to update its size.</li>
+                            <li>Create a <code>new pym.Child();</code>.</li>
+                            <li>Optional: If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>pym.child({ renderCallback: myFunc });</code> This function will be called once when the page loads and again any time the window is resized.</li>
+                            <li>Optional: You can pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). For example: <code>pym.child({ polling: 500 });</code>.</li>
+                            <li>Optional: If you need finer control over resize events, you can invoke <code>pymChild.sendHeightToParent()</code> at any time to force the iframe to update its size.</li>
                         </ul>
                     </div>
 
@@ -119,11 +119,11 @@
                         <h4>Example: Basic Embed</h4>
                         <p>In our simplest example, we have an HTML table that changes format (via CSS media queries). The height of the iframe adjusts to the height of the content onload and onresize.</p>
 
-                        <div id="example-table" class="example" data-iframe-target="examples/table/child.html"></div>
+                        <div id="example-table" class="example"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
 <pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
-&lt;script&gt;window.responsiveChild();&lt;/script&gt;
+&lt;script&gt;var pymChild = new pym.Child()&lt;/script&gt;
 </code></pre>
                     </div>
 
@@ -132,7 +132,7 @@
                         <h4>Example: Call a Function When the Page Resizes</h4>
                         <p>This might be useful in cases where sections of your child page need to be redrawn based on the new width. (For example, a graphic generated by D3, which would not stretch or reflow on its own.)</p>
 
-                        <div id="example-graphic" class="example" data-iframe-target="examples/graphic/child.html"></div>
+                        <div id="example-graphic" class="example"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
 <pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
@@ -150,17 +150,18 @@ window.responsiveChild({renderCallback: drawGraphic});
                         <h4>Example: Manual resize events</h4>
                         <p>If you have dynamic content and need finer control over resize events, you can invoke <code>window.responsiveChild.sendHeightToParent()</code> in the child window at any time to force the iframe to update its size. For example, say you have a quiz, and the content of the page changes when someone selects an answer, affecting the page&rsquo;s height:</p>
 
-                        <div id="example-quiz" class="example" data-iframe-target="examples/quiz/child.html"></div>
+                        <div id="example-quiz" class="example"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
 <pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script&gt;
+var pymChild = null;
 function check_answer(e) {
     // highlight the correct answer
-    window.responsiveChild.sendHeightToParent();
+    pymChild.sendHeightToParent();
 }
 $('.question').find('li').on('click', check_answer);
-window.responsiveChild();
+var pymChild = new pym.Child();
 &lt;/script&gt;
 </code></pre>
                     </div>
@@ -188,9 +189,9 @@ window.responsiveChild();
 
     <script type="text/javascript" src="src/pym.js"></script>
     <script>
-        window.pym.parent('example-table', {});
-        window.pym.parent('example-graphic', {});
-        window.pym.parent('example-quiz', {});
+        new pym.Parent('example-table', 'examples/table/child.html', {});
+        new pym.Parent('example-graphic', 'examples/graphic/child.html', {});
+        new pym.Parent('example-quiz', 'examples/quiz/child.html', {});
     </script>
 
     </body>
