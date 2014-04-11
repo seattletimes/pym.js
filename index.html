@@ -38,17 +38,17 @@
             <div class="wrapper">
                 <section id="about">
                     <h2>About Pym.js</h2>
-                    <p>Using iframes in a responsive page can be tricky. It&rsquo;s easy enough to make an iframe&rsquo;s width span 100% of its container, but sizing its height is tricky &mdash; especially if the content of the iframe changes height depending on page width or actions within the iframe.</p>
-                    <p><a href="https://raw.githubusercontent.com/nprapps/responsiveiframe/master/src/responsiveIframe.js">Pym.js</a> embeds and resizes an iframe responsively (width <em>and</em> height) within its parent container. It also bypasses the usual cross-domain issues.</p>
+                    <p>Using iframes in a responsive page can be tricky. It&rsquo;s easy enough to make an iframe&rsquo;s width span 100% of its container, but sizing its height is tricky &mdash; especially if the content of the iframe changes height depending on page width (for example, because of text wrapping or media queries) or events within the iframe.</p>
+                    <p><a href="https://raw.githubusercontent.com/nprapps/responsiveiframe/master/src/pym.js">Pym.js</a> embeds and resizes an iframe responsively (width <em>and</em> height) within its parent container. It also bypasses the usual cross-domain issues.</p>
                     <p><strong>Use case:</strong> The NPR Visuals team uses Pym.js to embed small custom bits of code (charts, maps, etc.) inside our CMS without CSS or JavaScript conflicts. <a href="http://www.npr.org/2014/03/25/293870089/maze-of-college-costs-and-aid-programs-trap-some-families">See an example of this in action.</a></p>
                 </section>
                 
                 <section id="requirements">
                     <h3>Requirements/Assumptions</h3>
                     <ul>
-                        <li>The responsive iframe library does <em>not</em> require jQuery or any other libraries. (Some of the examples use jQuery for unrelated features.)</li>
+                        <li>The responsive iframe library does not require jQuery or any other libraries. (However, some of the examples use jQuery for unrelated features.)</li>
                         <li>If you&rsquo;re pasting the iframe embed code into a CMS or blogging software, make sure that it allows you to embed HTML and JavaScript. Some CMSes (such as WordPress) may strip it out.</li>
-                        <li>The parent and child pages do not necessarily need to be on the same domain. (You can restrict this with xdomain.)</li>
+                        <li>The parent and child pages do not necessarily need to be on the same domain. (If desired, you can restrict this.)</li>
                     </ul>
                     
                     <h4>Browsers</h4>
@@ -66,20 +66,19 @@
                     
                 <section id="examples">
                     <h3>Usage</h3>
-                    <p>Resize your browser window to see the responsiveness in action. In all code examples, <code>PATH-TO-THIS-FOLDER</code> with the actual published path to your files</p>
+                    <p>Resize your browser window to see the responsiveness in action. In all code examples, replace <code>PATH-TO-THIS-FOLDER</code> with the actual published path to your files</p>
                     
                     <div class="example-block">
-                        <h4>On the Parent Page (Where You're Putting the iFrame)</h4>
+                        <h4>On the Parent Page (Where You&rsquo;re Putting the iFrame)</h4>
                         <ul>
                             <li>Name your containing div with a unique ID name, and include a <code>data-iframe-target</code> attribute with the path to your <code>child.html</code> file.</li>
-                            <li>Include <code>responsiveIframe.js</code>. <em>Only once per page.</em></li>
-                            <li>Call <code>window.responsiveParent();</code> to set up all responsive iframes on the page. <em>Only once per page.</em></li>
-                            <li>You can optionally pass in a regex to filter incoming message domains: <code>$('iframe').responsiveIframe({ xdomain: '*\.npr\.org' });</code></li>
+                            <li>Include <code>pym.js</code>. <em>Only once per page.</em></li>
+                            <li>Call <code>window.pym.parent();</code> to set up all responsive iframes on the page. <em>Only once per page.</em></li>
+                            <li>Optional: To filter incoming message domains, you can pass in a regex: <code>window.pym.parent('example', { xdomain: '*\.npr\.org' });</code></li>
                         </ul>
 
-<pre><code>&lt;div id="example" data-iframe-target="PATH-TO-THIS-FOLDER/child.html"&gt;&lt;/div&gt;
-&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/responsiveIframe.js"&gt;&lt;/script&gt;
-&lt;script&gt;window.responsiveParent();&lt;/script&gt;
+<pre><code>&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/pym.js"&gt;&lt;/script&gt;
+&lt;script>window.pym.parent('example', {});&lt;/script&gt;
 </code></pre>
                     </div>
 
@@ -93,12 +92,12 @@
                         </ul>
 
                         <h5>Code Needed on the Parent Page</h5>
-<pre><code>&lt;div id="example-1" data-iframe-target="PATH-TO-THIS-FOLDER/example-1/child.html"&gt;&lt;/div&gt;
-&lt;div id="example-2" data-iframe-target="PATH-TO-THIS-FOLDER/example-2/child.html"&gt;&lt;/div&gt;
-&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/responsiveIframe.js"&gt;&lt;/script&gt;
+<pre><code>&lt;div id="example-1" data-iframe-target="PATH-TO-THIS-FOLDER/child-1.html"&gt;&lt;/div&gt;
+&lt;div id="example-2" data-iframe-target="PATH-TO-THIS-FOLDER/child-2.html">&lt;/div&gt;
+&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/pym.js">&lt;/script&gt;
 &lt;script&gt;
-    window.responsiveParent();
-    window.responsiveParent();
+    window.pym.parent('example-1', {});
+    window.pym.parent('example-2', {});
 &lt;/script&gt;
 </code></pre>
                     </div>
@@ -107,10 +106,11 @@
                     <div class="example-block">
                         <h4>On the Child Page (The Content You Want to Embed)</h4>
                         <ul>
-                            <li>Include <code>child.js</code>.</li>
-                            <li>Invoke <code>setupResponsiveChild();</code>.</li>
-                            <li>If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>window.responsiveChild({ renderCallback: myFunc });</code> This function will be called once on load and then again anytime the window is resized.</li>
-                            <li>You can optionally pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). Like this <code>window.responsiveChild({ polling: 500 });</code>.</li>
+                            <li>Include <code>pym.js</code>.</li>
+                            <li>Invoke <code>window.pym.child();</code>.</li>
+                            <li>Optional: If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>window.pym.child({ renderCallback: myFunc });</code> This function will be called once when the page loads and again any time the window is resized.</li>
+                            <li>Optional: You can pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). For example: <code>window.pym.child({ polling: 500 });</code>.</li>
+                            <li>Optional: If you need finer control over resize events, you can invoke <code>window.pym.child.sendHeightToParent()</code> at any time to force the iframe to update its size.</li>
                         </ul>
                     </div>
 
@@ -122,7 +122,7 @@
                         <div id="example-table" class="example" data-iframe-target="examples/table/child.html"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/responsiveIframe.js" type="text/javascript"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script&gt;window.responsiveChild();&lt;/script&gt;
 </code></pre>
                     </div>
@@ -135,7 +135,7 @@
                         <div id="example-graphic" class="example" data-iframe-target="examples/graphic/child.html"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/responsiveIframe.js" type="text/javascript"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script&gt;
 function drawGraphic(width) {
 ...
@@ -153,7 +153,7 @@ window.responsiveChild({renderCallback: drawGraphic});
                         <div id="example-quiz" class="example" data-iframe-target="examples/quiz/child.html"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/responsiveIframe.js" type="text/javascript"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script&gt;
 function check_answer(e) {
     // highlight the correct answer
@@ -169,9 +169,9 @@ window.responsiveChild();
                 
                 <section id="how">
                     <h3>How It Works</h3>
-                    <p>The <code>parent.js</code> library and a small bit of javascript are injected onto the parent page. This code writes an iframe to the page in a container of your choice. The request for the iframe's contents includes querystring parameters for the <code>initialWidth</code> and <code>childId</code> of the child page. The initialWidth allows the child to know its size immediately on load. (In iOS the child frame can not determine its own width accurately.) The <code>childId</code> allows multiple children to be embedded on the same page, each with its own communication to the parent.</p>
-                    <p>The child page includes <code>child.js</code> and its own javascript. It invokes the <code>setupResponsiveIframe</code> function, which initializes cross-iframe communication to the parent, renders the any dynamic contents and then sends the computed height of the child to the parent via <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage">postMessage</a>. Upon receiving this message the parent resizes the containing iframe, thus ensuring the contents of the child are always visible.</p>
-                    <p>The parent page also registers for resize events. Any time one is received, the parent sends the new container width to each child via <code>postMessage</code>. The child rerenders its content and sends back the new height.</p>
+                    <p>The <code>Pym.js</code> library and a small bit of javascript are injected onto the parent page. This code writes an iframe to the page in a container of your choice. The request for the iframe&lsquo;s contents includes querystring parameters for the <code>initialWidth</code> and <code>childId</code> of the child page. The <code>initialWidth</code> allows the child to know its size immediately on load, because in iOS, the child frame can not determine its own width accurately. The <code>childId</code> allows multiple children to be embedded on the same page, each with its own communication to the parent.</p>
+                    <p>The child page also includes <code>Pym.js</code> and its own javascript. It initializes cross-iframe communication to the parent, renders any dynamic content and then sends the computed height of the child to the parent via <code>postMessage</code>. Upon receiving this message the parent resizes the containing iframe, thus ensuring the contents of the child are always visible.</p>
+                    <p>The parent page also registers for resize events. Any time one is received, the parent sends the new container width to each child via <code>postMessage</code>. The child re-renders its content and sends back the new height.</p>
                 </section>
 
 
@@ -186,8 +186,12 @@ window.responsiveChild();
             </div>
         </div>
 
-    <script type="text/javascript" src="src/responsiveIframe.js"></script>
-    <script>window.responsiveParent();</script>
+    <script type="text/javascript" src="src/pym.js"></script>
+    <script>
+        window.pym.parent('example-table', {});
+        window.pym.parent('example-graphic', {});
+        window.pym.parent('example-quiz', {});
+    </script>
 
     </body>
 </html>
