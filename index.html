@@ -47,14 +47,14 @@
                 <section id="requirements">
                     <h3>Requirements/Assumptions</h3>
                     <ul>
-                        <li>Pym.js does not require jQuery or any other libraries. Some of the examples use jQuery on the child pages for unrelated features.</li>
+                        <li><code>pym.js</code> does not require jQuery or any other libraries. Some of the examples use jQuery on the child pages for unrelated features.</li>
                         <li>If you&rsquo;re pasting the iframe embed code into a CMS or blogging software, make sure that it allows you to embed HTML and JavaScript. Some CMSes (such as WordPress) may strip tags out.</li>
                         <li>The parent and child pages do not need to be on the same domain. If they are not, child URLs should be fully-qualified, e.g., <code>http://blog.apps.npr.org/pym.js/examples/graphic/child.html</code></li>
-                        <li>Pym.js isn't built to handle embedding more than a handful of child frames on the parent. Ten or fewer is a good rule of thumb.</li>
+                        <li><code>pym.js</code> isn't built to handle embedding more than a handful of child frames on the parent. Ten or fewer is a good rule of thumb.</li>
                     </ul>
 
                     <h3>Browsers</h3>
-                    <p>This has been tested in:</p>
+                    <p><code>pym.js</code> has been tested in:</p>
                     <ul>
                         <li>Internet Explorer 9, 10 (Windows 7), 11 (Windows 8)</li>
                         <li>Chrome 32 (Mac 10.9)</li>
@@ -81,7 +81,7 @@
                         </ul>
 
 <pre><code>&lt;script type="text/javascript" src="pym.js"&gt;&lt;/script&gt;
-&lt;script>
+&lt;script&gt;
     var pymParent = new pym.Parent('example', 'child.html', {});
 &lt;/script&gt;
 </code></pre>
