@@ -3,16 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link rel="shortcut icon" href="http://media.npr.org/favicon.ico" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
         <link href="css/stylesheet.css" rel="stylesheet" type="text/css" media="screen">
         <link href="css/pygment_trac.css" rel="stylesheet" type="text/css" media="screen">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-        <script src="https://raw.githubusercontent.com/ryanpitts/listfilter/master/listfilter.js"></script>
+
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <title>Pym.js</title>
+        <title>Pym.js: Embed iframes responsively</title>
     </head>
 
     <body>
@@ -37,9 +38,9 @@
             <div class="wrapper">
                 <section id="about">
                     <h2>About Pym.js</h2>
-                    <p>Using iframes in a responsive page can be tricky. It's easy enough to make its width span 100%, but sizing the height is tricky &mdash; especially if the content of the iframe changes height depending on page width or actions within the iframe.</p>
-                    <p>Pym.js allows iframes to be embedded in a way that allows them to resize responsively within their parent and bypasses the usual cross-domain issues.</p>
-                    <p>Use case: Embed small custom bits of code (charts, maps, etc.) inside a CMS without override CSS or JavaScript conflicts. <a href="http://www.npr.org/2014/03/25/293870089/maze-of-college-costs-and-aid-programs-trap-some-families">See an example of this in action on NPR.org.</a></p>
+                    <p>Using iframes in a responsive page can be tricky. It&rsquo;s easy enough to make an iframe&rsquo;s width span 100% of its container, but sizing its height is tricky &mdash; especially if the content of the iframe changes height depending on page width or actions within the iframe.</p>
+                    <p>Pym.js embeds and resizes an iframe responsively (width <em>and</em> height) within its parent container. It also bypasses the usual cross-domain issues.</p>
+                    <p><strong>Use case:</strong> The NPR Visuals team uses Pym.js to embed small custom bits of code (charts, maps, etc.) inside our CMS without CSS or JavaScript conflicts. <a href="http://www.npr.org/2014/03/25/293870089/maze-of-college-costs-and-aid-programs-trap-some-families">See an example of this in action.</a></p>
                 </section>
                 
                 <section id="requirements">
@@ -83,7 +84,7 @@
 
 
                     <div class="example-block">
-                        <h4>Example</h4>
+                        <h4>Example: Basic Embed</h4>
                         <p>In our simplest example, we have an HTML table that changes format (via CSS media queries). The height of the iframe adjusts to the height of the content onload and onresize.</p>
 
                         <div id="example-table" class="example" data-iframe-target="examples/table/child.html"></div>
