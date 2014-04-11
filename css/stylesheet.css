@@ -87,8 +87,9 @@ h4 {
 } 
 
 h5 {
-  font-size: 1em;
+  font-size: 14px;
   color: #303030;
+  margin-bottom: .5em;
 } 
 
 h6 {
@@ -322,6 +323,10 @@ ul.my-list {
 }
 .example-block {
     margin-bottom: 3em;
+}
+
+.example {
+    margin-bottom: 1em;
 }
 
 /* MISC */

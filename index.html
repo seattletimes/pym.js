@@ -12,7 +12,7 @@
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <title>Listfilter.js</title>
+        <title>Pym.js</title>
     </head>
 
     <body>
@@ -20,11 +20,11 @@
 
             <header>
                 <div class="wrapper">
-                    <h1>ListFilter</h1>
-                    <h2>A fast, in-page text filter for a list of HTML elements.</h2>
+                    <h1>Pym.js</h1>
+                    <h2>Embed iframes responsively</h2>
                     
                     <section class="clearfix">
-                        <a href="https://github.com/ryanpitts/listfilter" id="view-on-github" class="button"><span>View on GitHub</span></a>
+                        <a href="https://github.com/nprapps/responsiveiframe/" id="view-on-github" class="button"><span>View on GitHub</span></a>
                         <div class="logos">
                             <a href="http://opennews.org" class="org-logo"><img src="img/opennews-logo.png"></a>
                             <!--<a href="http://opennews.org" class="org-logo"><img src="img/opennews-logo.png"></a>-->
@@ -36,158 +36,125 @@
 
             <div class="wrapper">
                 <section id="about">
-                    <h2>About listfilter.js</h2>
-                    <p>ListFilter creates a fast, case-insensitive text filter against a list of HTML elements on a page. Sometimes you just need a little thing to do a thing, you know?</p>
+                    <h2>About Pym.js</h2>
+                    <p>Using iframes in a responsive page can be tricky. It's easy enough to make its width span 100%, but sizing the height is tricky &mdash; especially if the content of the iframe changes height depending on page width or actions within the iframe.</p>
+                    <p>Pym.js allows iframes to be embedded in a way that allows them to resize responsively within their parent and bypasses the usual cross-domain issues.</p>
+                    <p>Use case: Embed small custom bits of code (charts, maps, etc.) inside a CMS without override CSS or JavaScript conflicts. <a href="http://www.npr.org/2014/03/25/293870089/maze-of-college-costs-and-aid-programs-trap-some-families">See an example of this in action on NPR.org.</a></p>
                 </section>
                 
                 <section id="requirements">
-                    <h3>Requirements</h3>
+                    <h3>Requirements/Assumptions</h3>
                     <ul>
-                        <li>jQuery</li>
+                        <li>The responsive iframe library can stand alone and <em>does not require jQuery</em>. (Some of the examples use jQuery for unrelated features.)</li>
+                        <li>If you&rsquo;re pasting the iframe embed code into a CMS or blogging software, make sure that it allows you to embed HTML and JavaScript. Some CMSes (such as WordPress) may strip it out.</li>
+                        <li>The parent and child pages do not necessarily need to be on the same domain. (You can restrict this with xdomain.)</li>
                     </ul>
                 </section>
                     
                 <section id="examples">
-                    <h3>Examples</h3>
+                    <h3>Usage</h3>
+                    <p>Resize your browser window to see the responsiveness in action. Replace "<strong>PATH-TO-THIS-FOLDER</strong>" with the actual published path to your files</p>
                     
                     <div class="example-block">
-                        <p>This simple implementation finds an unordered list of class <code>my-list</code>, and prepends it with a text input that filters the <code>li</code> elements in the list.</p>
-
-<pre><code>var filter = ListFilter({
-    listContainer: 'ul.my-list',
-    filterItemClass: 'li'
-});
-</code></pre>
-                    </div>
-
-                    <div class="example-block">
-                        <p>Here&rsquo;s a more likely use, which creates a text input inside an existing page element with ID <code>filter-list-input-container</code>. That text input filters children of class <code>filter-item</code> inside a parent of ID <code>filterable-list</code>. The child elements may be grouped inside blocks of class <code>filter-block</code>, and if no children inside a block match the text filter, the entire block is hidden as well. You can try it out below.</p>
-
-<pre><code>var filter = ListFilter({
-    inputContainer: '#filter-list-input-container',
-    listContainer: '#filterable-list',
-    filterItemClass: '.filter-item',
-    filterBlockClass: '.filter-block'
-});
-</code></pre>
-
-                        <div id="filter-list-input-container"></div>
-                        <div id="filterable-list" class="clearfix">
-                            <div class="filter-block">
-                                <h3>A.L. West</h3>
-                                <ul>
-                                    <li class="filter-item">Anaheim Angels</li>
-                                    <li class="filter-item">Houston Astros</li>
-                                    <li class="filter-item">Oakland Athletics</li>
-                                    <li class="filter-item">Seattle Mariners</li>
-                                    <li class="filter-item">Texas Rangers</li>
-                                </ul>
-                            </div>
-                            <div class="filter-block">
-                                <h3>A.L. Central</h3>
-                                <ul>
-                                    <li class="filter-item">Chicago White Sox</li>
-                                    <li class="filter-item">Cleveland Indians</li>
-                                    <li class="filter-item">Detroit Tigers</li>
-                                    <li class="filter-item">Kansas City Royals</li>
-                                    <li class="filter-item">Minnesota Twins</li>
-                                </ul>
-                            </div>
-                            <div class="filter-block">
-                                <h3>A.L. East</h3>
-                                <ul>
-                                    <li class="filter-item">Baltimore Orioles</li>
-                                    <li class="filter-item">Boston Red Sox</li>
-                                    <li class="filter-item">New York Yankees</li>
-                                    <li class="filter-item">Tampa Bay Rays</li>
-                                    <li class="filter-item">Toronto Blue Jays</li>
-                                </ul>
-                            </div>
-                            <div class="filter-block">
-                                <h3>N.L. West</h3>
-                                <ul>
-                                    <li class="filter-item">Arizona Diamondbacks</li>
-                                    <li class="filter-item">Colorado Rockies</li>
-                                    <li class="filter-item">Los Angeles Dodgers</li>
-                                    <li class="filter-item">San Diego Padres</li>
-                                    <li class="filter-item">San Francisco Giants</li>
-                                </ul>
-                            </div>
-                            <div class="filter-block">
-                                <h3>N.L. Central</h3>
-                                <ul>
-                                    <li class="filter-item">Chicago Cubs</li>
-                                    <li class="filter-item">Cincinnati Reds</li>
-                                    <li class="filter-item">Milwaukee Brewers</li>
-                                    <li class="filter-item">Pittsburgh Pirates</li>
-                                    <li class="filter-item">St. Louis Cardinals</li>
-                                </ul>
-                            </div>
-                            <div class="filter-block">
-                                <h3>N.L. East</h3>
-                                <ul>
-                                    <li class="filter-item">Atlanta Braves</li>
-                                    <li class="filter-item">Miami Marlins</li>
-                                    <li class="filter-item">New York Mets</li>
-                                    <li class="filter-item">Philadelphia Phillies</li>
-                                    <li class="filter-item">Washington Nationals</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <script type="text/javascript">
-                            var filter = ListFilter({
-                                inputContainer: '#filter-list-input-container',
-                                listContainer: '#filterable-list',
-                                filterItemClass: '.filter-item',
-                                filterBlockClass: '.filter-block'
-                            });
-                        </script>
-                    </div>
-                </section>
-
-                <section id="api">
-                    <div class="example-block">
-                        <h3>The ListFilter API</h3>
-                        <p>When you create a new filter, these arguments are <strong>required:</strong></p>
+                        <h4>On the Parent Page (Where You're Putting the iFrame)</h4>
                         <ul>
-                            <li><strong>listContainer:</strong> The parent HTML element containing the items to be filtered. You can pass this a jQuery-style ID or class, or an HTML tag name.</li>
-                            <li><strong>filterItemClass:</strong> The elements to be matched by the filter. You can pass this a jQuery-style class or a tag name.</li>
+                            <li>Name your containing div with a unique ID name, and include a <code>data-iframe-target</code> attribute with the path to your <code>child.html</code> file.</li>
+                            <li>Include <code>responsiveIframe.js</code>. <em>Only once per page.</em></li>
+                            <li>Call <code>window.responsiveParent();</code> to set up all responsive iframes on the page. <em>Only once per page.</em></li>
+                            <li>You can optionally pass in a regex to filter incoming message domains: <code>$('iframe').responsiveIframe({ xdomain: '*\.npr\.org' });</code></li>
+                        </ul>
+
+<pre><code>&lt;div id="example" data-iframe-target="PATH-TO-THIS-FOLDER/child.html"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/responsiveIframe.js"&gt;&lt;/script&gt;
+&lt;script&gt;window.responsiveParent();&lt;/script&gt;
+</code></pre>
+                    </div>
+
+
+                    <div class="example-block">
+                        <h4>On the Child Page (The Content You Want to Embed)</h4>
+                        <ul>
+                            <li>Include <code>child.js</code>.</li>
+                            <li>Invoke <code>setupResponsiveChild();</code>.</li>
+                            <li>If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>setupResponsiveChild({ renderCallback: myFunc });</code> This function will be called once on load and then again anytime the window is resized.</li>
+                            <li>You can optionally pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to on load and resize events). Like this <code>setupResponsiveChild({ polling: 500 });</code>.</li>
                         </ul>
                     </div>
 
-                    <div class="example-block">
-                        <p>When you create a new filter, these arguments are <strong>optional</strong>:</p>
-                        <ul>
-                            <li><strong>inputContainer</strong>: The HTML element in which to place the text-filter input. You should pass this a jQuery-style ID. If you do not provide this argument, the input will be inserted immediately before the <code>listContainer</code>.</li>
-                            <li><strong>inputPrompt</strong>: A text string that appears immediately before the text-filter input. Defaults to &lsquo;Search list.&rsquo;</li>
-                            <li><strong>inputClass</strong>: A CSS class to apply to the text-filter <code>input</code> element.</li>
-                            <li><strong>filterBlockClass:</strong> An HTML wrapper class used to group members <code>filterItemClass</code> (so you can include headers or other markup along with groups). You should pass this a jQuery-style class. During filtering, any member of <code>filterBlockClass</code> with no visible filter items will also be hidden.</li>
-                        </ul>
-                    </div>
 
                     <div class="example-block">
-<pre><code>var filter = ListFilter({
-    listContainer: '', //required jQuery-style ID or class, or an HTML tag name
-    filterItemClass: '', //required jQuery-style class or HTML tag name
-    inputContainer: '', //optional jQuery-style ID
-    inputPrompt: '', //optional string
-    inputClass: '', //optional string
-    filterBlockClass: '' //optional jQuery-style class
-});
+                        <h4>Example</h4>
+                        <p>In our simplest example, we have an HTML table that changes format (via CSS media queries). The height of the iframe adjusts to the height of the content onload and onresize.</p>
+
+                        <div id="example-table" class="example" data-iframe-target="examples/table/child.html"></div>
+                        
+                        <h5>Code Needed on the Child Page</h5>
+<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/responsiveIframe.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;window.responsiveChild();&lt;/script&gt;
+</code></pre>
+                    </div>
+
+
+                    <div class="example-block">
+                        <h4>Example: Call a Function When the Page Resizes</h4>
+                        <p>This might be useful in cases where sections of your child page need to be redrawn based on the new width. (For example, a graphic generated by D3, which would not stretch or reflow on its own.)</p>
+
+                        <div id="example-graphic" class="example" data-iframe-target="examples/graphic/child.html"></div>
+                        
+                        <h5>Code Needed on the Child Page</h5>
+<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/responsiveIframe.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;
+function drawGraphic(width) {
+...
+}
+window.responsiveChild({renderCallback: drawGraphic});
+&lt;/script&gt;
+</code></pre>
+                    </div>
+
+
+                    <div class="example-block">
+                        <h4>Example: Manual resize events</h4>
+                        <p>If you have dynamic content and need finer control over resize events, you can invoke <code>sendHeightToParent()</code> in the child window at any time to force the iframe to update its size. For example, say you have a quiz, and the content of the page changes when someone selects an answer, affecting the page&rsquo;s height:</p>
+
+                        <div id="example-quiz" class="example" data-iframe-target="examples/quiz/child.html"></div>
+                        
+                        <h5>Code Needed on the Child Page</h5>
+<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/responsiveIframe.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;
+function check_answer(e) {
+    // highlight the correct answer
+    window.responsiveChild.sendHeightToParent();
+}
+$('.question').find('li').on('click', check_answer);
+window.responsiveChild();
+&lt;/script&gt;
 </code></pre>
                     </div>
                 </section>
+                
+                
+                <section id="how">
+                    <h3>How It Works</h3>
+                    <p>The <code>parent.js</code> library and a small bit of javascript are injected onto the parent page. This code writes an iframe to the page in a container of your choice. The request for the iframe's contents includes querystring parameters for the <code>initialWidth</code> and <code>childId</code> of the child page. The initialWidth allows the child to know its size immediately on load. (In iOS the child frame can not determine its own width accurately.) The <code>childId</code> allows multiple children to be embedded on the same page, each with its own communication to the parent.</p>
+                    <p>The child page includes <code>child.js</code> and its own javascript. It invokes the <code>setupResponsiveIframe</code> function, which initializes cross-iframe communication to the parent, renders the any dynamic contents and then sends the computed height of the child to the parent via <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage">postMessage</a>. Upon receiving this message the parent resizes the containing iframe, thus ensuring the contents of the child are always visible.</p>
+                    <p>The parent page also registers for resize events. Any time one is received, the parent sends the new container width to each child via <code>postMessage</code>. The child rerenders its content and sends back the new height.</p>
+                </section>
+
 
                 <section id="license">
                     <h3>License</h3>
-                    <p>MIT.</p>
+                    <p><a href="https://github.com/nprapps/responsiveiframe/blob/master/LICENSE">MIT</a></p>
                 </section>
 
                 <footer>
-                    <p>Listfilter is maintained by <a href="https://github.com/ryanpitts">ryanpitts</a></p>
+                    <p>Pym.js was built by the <a href="http://github.com/nprapps">NPR Visuals</a> team, based on work by the <a href="https://github.com/npr/responsiveiframe">NPR Tech Team</a> and <a href="https://github.com/ioseb">Ioseb Dzmanashvili</a>. Thanks to <a href="https://twitter.com/erikhinton">Erik Hinton</a> for suggesting the name.</p>
                 </footer>
             </div>
         </div>
+
+    <script type="text/javascript" src="src/responsiveIframe.js"></script>
+    <script>window.responsiveParent();</script>
+
     </body>
 </html>
