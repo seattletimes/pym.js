@@ -66,19 +66,21 @@
                     
                 <section id="examples">
                     <h3>Usage</h3>
-                    <p>Resize your browser window to see the responsiveness in action. In all code examples, replace <code>PATH-TO-THIS-FOLDER</code> with the actual published path to your files</p>
+                    <p>Resize your browser window to see the responsiveness in action.</p>
                     
                     <div class="example-block">
                         <h4>On the Parent Page (Where You&rsquo;re Putting the iFrame)</h4>
                         <ul>
                             <li>Name your containing div with a unique ID.</li>
                             <li>Include <code>pym.js</code>. <em>Only once per page.</em></li>
-                            <li>Create a <code>new pym.Parent(parent_id, child_url);</code> once per iframe</li>
-                            <li>Optional: To filter incoming message domains, you can pass in a regex: <code>pym.parent('example', 'child.html', { xdomain: '*\.npr\.org' });</code></li>
+                            <li>Create a <code>new pym.Parent(parent_id, child_url);</code> for <em>each</em> responsive iframe.</li>
+                            <li>Optional: To filter incoming message domains, you can pass in a regex. For example: <code>pym.Parent('example', 'child.html', { xdomain: '*\.npr\.org' });</code></li>
                         </ul>
 
-<pre><code>&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/pym.js"&gt;&lt;/script&gt;
-&lt;script>window.pym.parent('example', {});&lt;/script&gt;
+<pre><code>&lt;script type="text/javascript" src="pym.js"&gt;&lt;/script&gt;
+&lt;script>
+    var pymParent = new pym.Parent('example', 'child.html', {});
+&lt;/script&gt;
 </code></pre>
                     </div>
 
@@ -94,10 +96,10 @@
                         <h5>Code Needed on the Parent Page</h5>
 <pre><code>&lt;div id="example-1"&gt;&lt;/div&gt;
 &lt;div id="example-2"&gt;&lt;/div&gt;
-&lt;script type="text/javascript" src="PATH-TO-THIS-FOLDER/pym.js">&lt;/script&gt;
+&lt;script type="text/javascript" src="pym.js">&lt;/script&gt;
 &lt;script&gt;
-    var pymParent = new pym.Parent('example-1', 'PATH-TO-THIS-FOLDER/child-1.html', {});
-    var second = new pym.Parent('example-2', 'PATH-TO-THIS-FOLDER/child-2.html', {});
+    var pymParent = new pym.Parent('example-1', 'child-1.html', {});
+    var second = new pym.Parent('example-2', 'child-2.html', {});
 &lt;/script&gt;
 </code></pre>
                     </div>
@@ -108,8 +110,8 @@
                         <ul>
                             <li>Include <code>pym.js</code>.</li>
                             <li>Create a <code>new pym.Child();</code>.</li>
-                            <li>Optional: If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>pym.child({ renderCallback: myFunc });</code> This function will be called once when the page loads and again any time the window is resized.</li>
-                            <li>Optional: You can pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). For example: <code>pym.child({ polling: 500 });</code>.</li>
+                            <li>Optional: If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>pym.Child({ renderCallback: myFunc });</code> This function will be called once when the page loads and again any time the window is resized.</li>
+                            <li>Optional: You can pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). For example: <code>pym.Child({ polling: 500 });</code>.</li>
                             <li>Optional: If you need finer control over resize events, you can invoke <code>pymChild.sendHeightToParent()</code> at any time to force the iframe to update its size.</li>
                         </ul>
                     </div>
@@ -122,8 +124,10 @@
                         <div id="example-table" class="example"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
-&lt;script&gt;var pymChild = new pym.Child()&lt;/script&gt;
+<pre><code>&lt;script src="pym.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;
+    var pymChild = new pym.Child();
+&lt;/script&gt;
 </code></pre>
                     </div>
 
@@ -135,12 +139,13 @@
                         <div id="example-graphic" class="example"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="pym.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script&gt;
-function drawGraphic(width) {
-...
-}
-window.responsiveChild({renderCallback: drawGraphic});
+    function drawGraphic(width) {
+        ...
+    }
+
+    var pymChild = new pym.Child({ renderCallback: drawGraphic });
 &lt;/script&gt;
 </code></pre>
                     </div>
@@ -148,20 +153,26 @@ window.responsiveChild({renderCallback: drawGraphic});
 
                     <div class="example-block">
                         <h4>Example: Manual resize events</h4>
-                        <p>If you have dynamic content and need finer control over resize events, you can invoke <code>window.responsiveChild.sendHeightToParent()</code> in the child window at any time to force the iframe to update its size. For example, say you have a quiz, and the content of the page changes when someone selects an answer, affecting the page&rsquo;s height:</p>
+                        <p>If you have dynamic content and need finer control over resize events, you can invoke <code>pymChild.sendHeightToParent()</code> in the child window at any time to force the iframe to update its size. For example, say you have a quiz, and the content of the page changes when someone selects an answer, affecting the page&rsquo;s height:</p>
 
                         <div id="example-quiz" class="example"></div>
                         
                         <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="PATH-TO-THIS-FOLDER/pym.js" type="text/javascript"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="pym.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script&gt;
-var pymChild = null;
-function check_answer(e) {
-    // highlight the correct answer
-    pymChild.sendHeightToParent();
-}
-$('.question').find('li').on('click', check_answer);
-var pymChild = new pym.Child();
+    var pymChild = null;
+
+    function check_answer(e) {
+        // highlight the correct answer
+        ...
+
+        // send updated height to parent
+        pymChild.sendHeightToParent();
+    }
+
+    $('.question').find('li').on('click', check_answer);
+    
+    var pymChild = new pym.Child();
 &lt;/script&gt;
 </code></pre>
                     </div>
