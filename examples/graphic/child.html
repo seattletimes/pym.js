@@ -55,25 +55,12 @@
         }
 
         /* chart */
-        #graphic {
-            width: 100%;
-        }
-        #graphic:before,
-        #graphic:after {
-            content: " "; /* 1 */
-            display: table; /* 2 */
-        }
-        #graphic:after { clear: both; }
-
+        #graphic { width: 100%; }
         #graphic img {
             max-width: 100%;
             height: auto;
         }
-
-        #graphic svg {
-            font-family: Arial, Helvetica, sans-serif;
-            margin-bottom: 1em;
-        }
+        #graphic svg { margin-bottom: 1em; }
         #graphic .axis {
             font-size: 12px;
             fill: #666;
@@ -96,55 +83,8 @@
         #graphic .line {
             fill: none;
             stroke-width: 3px;
+            stroke: #11605E;
         }
-
-        #graphic .bars rect { fill: #17807E; }
-        #graphic .label text,
-        #graphic .value text {
-            font-weight: normal;
-            font-size: 12px;
-            fill: #333;
-            text-align: right;
-        }
-        #graphic .value text {
-            fill: #fff;
-            font-size: 11px;
-        }
-
-        #graphic .key {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0 0 1em 0;
-            padding: 0;
-            list-style-type: none;
-        }
-
-        #graphic .key .key-item {
-            display: inline-block;
-            margin: 0 18px 0 0;
-            padding: 0;
-            line-height: 15px;
-        }
-
-        #graphic .key .key-item b {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            margin-right: 6px;
-            float: left;
-        }
-
-        #graphic .key .key-item label {
-            white-space: nowrap;
-            font-size: 12px;
-            color: #333;
-            font-weight: normal;
-        }
-
-        .line-0 { stroke: #11605E; }
-        .line-1 { stroke: #8BC0BF; }
-
-        .key-0 b { background-color: #11605E; }
-        .key-1 b { background-color: #8BC0BF; }
     </style>
 
 </head>
