@@ -1,0 +1,14 @@
+0.1.2
+-----
+
+* Support specifying pym div's with data attributes. (#44)
+
+0.1.1
+-----
+
+* UMD pattern support. (#42)
+
+0.1.0
+-----
+
+* Initial release.
