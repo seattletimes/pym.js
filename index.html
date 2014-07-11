@@ -27,6 +27,7 @@
 
                     <section class="clearfix">
                         <a href="https://github.com/nprapps/responsiveiframe/" id="view-on-github" class="button"><span>View on GitHub</span></a>
+                        <a href="./api/" id="api" class="button"><span>Browse API docs</span></a>
                         <div class="logos">
                             <a href="http://opennews.org" class="org-logo"><img src="img/opennews-logo.png"></a>
                             <a href="http://blog.apps.npr.org" class="org-logo npr"><img src="http://media.npr.org/chrome/news/nprlogo_138x46.gif"></a>
@@ -125,7 +126,7 @@
                             <li>Create a <code>new pym.Child();</code>.</li>
                             <li>Optional: If the contents of your iframe are dynamic you will want to pass in a rendering function, like this: <code>pym.Child({ renderCallback: myFunc });</code> This function will be called once when the page loads and again any time the window is resized.</li>
                             <li>Optional: You can pass in a number of milliseconds to enable automaticaly updating the height at that rate (in addition to onload and onresize events). For example: <code>pym.Child({ polling: 500 });</code>.</li>
-                            <li>Optional: If you need finer control over resize events, you can invoke <code>pymChild.sendHeightToParent()</code> at any time to force the iframe to update its size.</li>
+                            <li>Optional: If you need finer control over resize events, you can invoke <code>pymChild.sendHeight()</code> at any time to force the iframe to update its size.</li>
                         </ul>
                     </div>
 
@@ -166,7 +167,7 @@
 
                     <div class="example-block">
                         <h4>Example: Manual resize events</h4>
-                        <p>If you have dynamic content and need finer control over resize events, you can invoke <code>pymChild.sendHeightToParent()</code> in the child window at any time to force the iframe to update its size. For example, say you have a quiz, and the content of the page changes when someone selects an answer, affecting the page&rsquo;s height:</p>
+                        <p>If you have dynamic content and need finer control over resize events, you can invoke <code>pymChild.sendHeight()</code> in the child window at any time to force the iframe to update its size. For example, say you have a quiz, and the content of the page changes when someone selects an answer, affecting the page&rsquo;s height:</p>
 
                         <div id="example-quiz" class="example"></div>
 
@@ -178,7 +179,7 @@
         ...
 
         // send updated height to parent
-        pymChild.sendHeightToParent();
+        pymChild.sendHeight();
     }
 
     $('.question').find('li').on('click', check_answer);

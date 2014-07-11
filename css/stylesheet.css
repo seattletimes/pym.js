@@ -214,6 +214,9 @@ a.button {
   background-color: #e7e7e7;
   height: 48px;
 }
+a.button:not(:first-child) {
+  margin-left: 8px;
+}
 a.button:hover {
   background: #fafafa; /* Old browsers */
 }
@@ -223,12 +226,12 @@ a.button, a.org-logo {
     border-radius: .5em;
 }
 a.button span {
-  padding-left: 32px;
   display: block;
   height: 24px;
 }
 
 #view-on-github span {
+  padding-left: 32px;
   background: transparent url(../img/octocat-icon.png) -4px 50% no-repeat;
 }
 #view-on-github {
