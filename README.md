@@ -8,22 +8,24 @@ Using iframes in a responsive page can be frustrating. It&rsquo;s easy enough to
 
 Use case: The NPR Visuals team uses Pym.js to embed small custom bits of code (charts, maps, etc.) inside our CMS without CSS or JavaScript conflicts. [See an example of this in action.](http://www.npr.org/2014/03/25/293870089/maze-of-college-costs-and-aid-programs-trap-some-families)
 
-### [&rsaquo; Read the Documentation](http://blog.apps.npr.org/pym.js/)
+### [&rsaquo; Read the documentation](http://blog.apps.npr.org/pym.js/)
 
-## Generating API docs
+### [&rsaquo; Browse the API](http://blog.apps.npr.org/pym.js/api/)
 
-API documention can be generated with [jsdoc](https://github.com/jsdoc3/jsdoc).
+## Development tasks
 
-To install it:
+Grunt configuration is included for running common development tasks.
 
-```
-npm install -g jsdoc@"<=3.3.0"
-```
-
-Then
+Javascript can be linted with [jshint](http://jshint.com/):
 
 ```
-jsdoc src/pym.js
+grunt jshint
+```
+
+API documention can be generated with [jsdoc](https://github.com/jsdoc3/jsdoc):
+
+```
+grunt jsdoc
 ```
 
 ## License & Credits
@@ -36,3 +38,4 @@ Additional contributors:
 
 * [Pierre-Yves Jamon](https://github.com/Pym) 
 * [jugglinmike](https://github.com/jugglinmike)
+* [David Rogers](https://github.com/al-the-x)
