@@ -107,15 +107,16 @@
                             <li>Include <code>pym.js</code> only <em>once</em> on the page.</li>
                         </ul>
 
-                        <h5>Code Needed on the Parent Page</h5>
+                        <h5>HTML Needed on the Parent Page</h5>
 <pre><code>&lt;div id="example-1"&gt;&lt;/div&gt;
 &lt;div id="example-2"&gt;&lt;/div&gt;
-&lt;script type="text/javascript" src="pym.js">&lt;/script&gt;
-&lt;script&gt;
-    var pymParent = new pym.Parent('example-1', 'child-1.html', {});
-    var second = new pym.Parent('example-2', 'child-2.html', {});
-&lt;/script&gt;
 </code></pre>
+
+                        <h5>Javascript Needed on the Parent Page</h5>
+<pre><code>var pymParent = new pym.Parent('example-1', 'child-1.html', {});
+var second = new pym.Parent('example-2', 'child-2.html', {});
+</code></pre>
+
                     </div>
 
 
@@ -137,11 +138,8 @@
 
                         <div id="example-table" class="example"></div>
 
-                        <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="pym.js" type="text/javascript"&gt;&lt;/script&gt;
-&lt;script&gt;
-    var pymChild = new pym.Child();
-&lt;/script&gt;
+                        <h5>Javascript Needed on the Child Page</h5>
+<pre><code>var pymChild = new pym.Child();
 </code></pre>
                     </div>
 
@@ -152,15 +150,12 @@
 
                         <div id="example-graphic" class="example"></div>
 
-                        <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="pym.js" type="text/javascript"&gt;&lt;/script&gt;
-&lt;script&gt;
-    function drawGraphic(width) {
-        ...
-    }
+                        <h5>Javascript Needed on the Child Page</h5>
+<pre><code>function drawGraphic(width) {
+    ...
+}
 
-    var pymChild = new pym.Child({ renderCallback: drawGraphic });
-&lt;/script&gt;
+var pymChild = new pym.Child({ renderCallback: drawGraphic });
 </code></pre>
                     </div>
 
@@ -171,25 +166,22 @@
 
                         <div id="example-quiz" class="example"></div>
 
-                        <h5>Code Needed on the Child Page</h5>
-<pre><code>&lt;script src="pym.js" type="text/javascript"&gt;&lt;/script&gt;
-&lt;script&gt;
-    function check_answer(e) {
-        // highlight the correct answer
-        ...
+                        <h5>Javascript Needed on the Child Page</h5>
 
-        // send updated height to parent
-        pymChild.sendHeight();
-    }
+<pre><code>function check_answer(e) {
+    // highlight the correct answer
+    ...
 
-    $('.question').find('li').on('click', check_answer);
+    // send updated height to parent
+    pymChild.sendHeight();
+}
 
-    var pymChild = new pym.Child();
-&lt;/script&gt;
+$('.question').find('li').on('click', check_answer);
+
+var pymChild = new pym.Child();
 </code></pre>
                     </div>
                 </section>
-
 
                 <section id="how">
                     <h3>How It Works</h3>
@@ -197,36 +189,45 @@
                     <p>The child page also includes <code>Pym.js</code> and its own javascript. It initializes cross-iframe communication to the parent, renders any dynamic content and then sends the computed height of the child to the parent via <code>postMessage</code>. Upon receiving this message the parent resizes the containing iframe, thus ensuring the contents of the child are always visible.</p>
                     <p>The parent page also registers for resize events. Any time one is received, the parent sends the new container width to each child via <code>postMessage</code>. The child re-renders its content and sends back the new height.</p>
                 </section>
+
+                <section id="auto">
+                    <h3>Auto-initializing Pym</h3>
+
+                    <p>Certain CMS's prevent custom Javascript from being embedded on the page. In order to allow pym to support those environments, it can be initialized via <code>data-</code> attributes. This limits usage of pym to simple cases, but should still be enough for many users.</p>
+
+                    <h5>HTML Needed on the Parent Page</h5>
+
+<pre><code>&lt;div data-pym-src="child.html"&gt;&lt;/div&gt;
+</code></pre>
+                </section>
                 
                 <section id="custom-events">
-                    <h3>Sending custom iframe events</h3>
+                    <h3>Sending Custom iFrame Events</h3>
 
                     <p>Although not it's original purpose, pym.js can also be used to send gand receive generic event data between the iframe parent and child. A simple, jQuery-like event binding model is used to support this message passing.</p> 
 
                     <p>In the following example a click on the link in the parent container will navigate the child frame to a new location.</p> 
 
-                    <h5>Code needed on the Parent page</h5>
-<pre><code>
-    var pymParent = pym.Parent('example', 'child.html', {});
+                    <h5>Javascript Needed on the Parent Page</h5>
+<pre><code>var pymParent = pym.Parent('example', 'child.html', {});
 
-    document.getElementById('myLink').addEventListener('click', onLinkClick);
+document.getElementById('myLink').addEventListener('click', onLinkClick);
 
-    function onLinkClick(e) {
-        e.preventDefault();
+function onLinkClick(e) {
+    e.preventDefault();
 
-        pymParent.sendMessageToChild('navigate', e.target.href);
-    }
+    pymParent.sendMessageToChild('navigate', e.target.href);
+}
 </code></pre>
 
-                    <h5>Code needed on the Child page</h5>
-<pre><code>
-    var pymChild = new pym.Child();
+                    <h5>Javascript needed on the Child page</h5>
+<pre><code>var pymChild = new pym.Child();
 
-    pymChild.on('navigate', onNavigateMessage); 
-    
-    function onNavigateMessage(url) {
-        window.location.href = url;
-    }
+pymChild.on('navigate', onNavigateMessage); 
+
+function onNavigateMessage(url) {
+    window.location.href = url;
+}
 </code></pre>
                 </section>
 
