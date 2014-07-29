@@ -200,13 +200,13 @@ var pymChild = new pym.Child();
 <pre><code>&lt;div data-pym-src="child.html"&gt;&lt;/div&gt;
 </code></pre>
                 </section>
-                
+
                 <section id="custom-events">
                     <h3>Sending Custom iFrame Events</h3>
 
-                    <p>Although not it's original purpose, pym.js can also be used to send gand receive generic event data between the iframe parent and child. A simple, jQuery-like event binding model is used to support this message passing.</p> 
+                    <p>Although not it's original purpose, pym.js can also be used to send gand receive generic event data between the iframe parent and child. A simple, jQuery-like event binding model is used to support this message passing.</p>
 
-                    <p>In the following example a click on the link in the parent container will navigate the child frame to a new location.</p> 
+                    <p>In the following example a click on the link in the parent container will navigate the child frame to a new location.</p>
 
                     <h5>Javascript Needed on the Parent Page</h5>
 <pre><code>var pymParent = pym.Parent('example', 'child.html', {});
@@ -216,19 +216,21 @@ document.getElementById('myLink').addEventListener('click', onLinkClick);
 function onLinkClick(e) {
     e.preventDefault();
 
-    pymParent.sendMessageToChild('navigate', e.target.href);
+    pymParent.sendMessage('navigate', e.target.href);
 }
 </code></pre>
 
                     <h5>Javascript needed on the Child page</h5>
 <pre><code>var pymChild = new pym.Child();
 
-pymChild.on('navigate', onNavigateMessage); 
+pymChild.on('navigate', onNavigateMessage);
 
 function onNavigateMessage(url) {
     window.location.href = url;
 }
 </code></pre>
+
+                    <p>Note that the reverse scenario can be performed as well; children can send messages to the parent with the same <code>sendMessage()</code> function.</p>
                 </section>
 
                 <section id="in-the-wild">
