@@ -223,7 +223,7 @@ function onLinkClick(e) {
                     <h5>Javascript needed on the Child page</h5>
 <pre><code>var pymChild = new pym.Child();
 
-pymChild.on('navigate', onNavigateMessage);
+pymChild.onMessage('navigate', onNavigateMessage);
 
 function onNavigateMessage(url) {
     window.location.href = url;
