@@ -490,7 +490,7 @@
 
         // If we're configured to poll, create a setInterval to handle that.
         if (this.settings.polling) {
-            window.setInterval(this.sendHeight, this.settings.polling);
+            window.setInterval(this.sendHeight.bind(this), this.settings.polling);
         }
 
         return this;
