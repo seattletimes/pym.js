@@ -24,7 +24,7 @@
     var _getParameterByName = function(name) {
         if (params) return params[name] || "";
         params = {};
-        var search = window.location.search;
+        var search = window.location.search.replace(/^\?/, "");
         var pairs = search.split("&");
         pairs.forEach(function(pair) {
             var split = pair.split("=");
