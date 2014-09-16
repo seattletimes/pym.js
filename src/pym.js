@@ -16,20 +16,21 @@
 
     /**
     * Generic function for parsing URL params.
-    * Via http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
     *
     * @method _getParameterByName
     * @param {String} name The name of the paramter to get from the URL.
     */
+    var params;
     var _getParameterByName = function(name) {
-        var regex = new RegExp("[\\?&]" + name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]') + '=([^&#]*)');
-        var results = regex.exec(location.search);
-
-        if (results === null) {
-            return '';
-        }
-
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
+        if (params) return params[name] || "";
+        params = {};
+        var search = window.location.search;
+        var pairs = search.split("&");
+        pairs.forEach(function(pair) {
+            var split = pair.split("=");
+            params[split[0]] = split[1] ? decodeURIComponent(split[1].replace(/\+/g, " ")) : "";
+        });
+        return params[name];
     };
 
     /**
@@ -170,7 +171,7 @@
     Parent.prototype = {
         _constructIframe: function() {
             // Calculate the width of this element.
-            var width = this.el.offsetWidth.toString();
+            var width = this.el.offsetWidth;
 
             // Create an iframe element attached to the document.
             this.iframe = document.createElement("iframe");
@@ -310,7 +311,7 @@
          * @method sendWidth
          */
         sendWidth: function() {
-            var width = this.el.offsetWidth.toString();
+            var width = this.el.offsetWidth;
 
             this.sendMessage('width', width);
         }
@@ -475,7 +476,7 @@
             */
 
             // Get the child's height.
-            var height = document.getElementsByTagName('body')[0].offsetHeight.toString();
+            var height = document.body.offsetHeight;
 
             // Send the height to the parent.
             this.sendMessage('height', height);
